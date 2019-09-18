@@ -13,7 +13,7 @@
 $name = 'Moderator mode';
 $description = 'Enable certain users to manage all pictures';
 $author = '<a href="http://forum.coppermine-gallery.net/index.php?action=profile;u=24278" rel="external" class="external">eenemeenemuu</a>';
-$version = '0.2';
+$version = '0.3';
 $plugin_cpg_version = array('min' => '1.6');
 $extra_info = $install_info = 'Configuration in codebase.php file';
 

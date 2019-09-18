@@ -18,6 +18,7 @@ function moderator_mode() {
     // Configuration here:
     $moderator_user_ids = array('3');
     $moderator_allowed_sites = array(
+        'displayimage.php', // needed for edit one pic (display button)
         'edit_one_pic.php', // needed for edit one pic
         'delete.php', // needed for edit one pic
         'index.php', // needed for edit several pics (display button in category/album view)
@@ -37,42 +38,17 @@ function moderator_mode() {
     global $CPG_PHP_SELF;
 
     if (in_array(USER_ID, $moderator_user_ids)) {
-        define('MODERATOR_USER');
+        define('USER_IS_MODERATOR');
         if (in_array($CPG_PHP_SELF, $moderator_allowed_sites)) {
             return true;
         }
     }
 }
 
-$thisplugin->add_filter('file_data', 'moderator_mode_file_data');
-
-function moderator_mode_file_data($data) {
-    if (MODERATOR_USER && !$data['menu']) {
-        global $lang_display_image_php, $CURRENT_PIC_DATA, $CURRENT_ALBUM_DATA, $CONFIG;
-
-        $delete_icon = cpg_fetch_icon('delete', 1);
-        $edit_icon   = cpg_fetch_icon('edit', 1);
-        $rotate_icon = cpg_fetch_icon('rotate_ccw', 1);
-
-        list($timestamp, $form_token) = getFormToken();
-        $picmenu = <<< EOT
-    <div class="buttonlist align_right">
-		<ul>
-			<li><a href="javascript:;" onclick="return MM_openBrWindow('pic_editor.php?id={$CURRENT_PIC_DATA['pid']}','Crop_Picture','scrollbars=yes,toolbar=no,status=yes,resizable=yes')"><span>{$rotate_icon}{$lang_display_image_php['crop_pic']}</span></a></li>
-			<li><a href="edit_one_pic.php?id={$CURRENT_PIC_DATA['pid']}&amp;what=picture"><span>{$edit_icon}{$lang_display_image_php['edit_pic']}</span></a></li>
-			<li><a href="delete.php?id={$CURRENT_PIC_DATA['pid']}&amp;what=picture&amp;form_token={$form_token}&amp;timestamp={$timestamp}" onclick="return confirm('{$lang_display_image_php['confirm_del']}'); return false; "><span class="last">{$delete_icon}{$lang_display_image_php['del_pic']}</span></a></li>
-		</ul>
-	</div>
-EOT;
-        $data['menu'] = $picmenu;
-    }
-    return $data;
-}
-
 $thisplugin->add_filter('admin_menu', 'moderator_mode_admin_menu');
 
 function moderator_mode_admin_menu($html) {
-    if (!USER_IS_ADMIN && MODERATOR_USER) {
+    if (!USER_IS_ADMIN && USER_IS_MODERATOR) {
         global $template_user_admin_menu, $lang_user_admin_menu, $lang_gallery_admin_menu;
 
         $param = array('{ALBMGR_TITLE}' => $lang_user_admin_menu['albmgr_title'],
