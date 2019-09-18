@@ -72,7 +72,7 @@ EOT;
 $thisplugin->add_filter('admin_menu', 'moderator_mode_admin_menu');
 
 function moderator_mode_admin_menu($html) {
-    if (MODERATOR_USER) {
+    if (!USER_IS_ADMIN && MODERATOR_USER) {
         global $template_user_admin_menu, $lang_user_admin_menu, $lang_gallery_admin_menu;
 
         $param = array('{ALBMGR_TITLE}' => $lang_user_admin_menu['albmgr_title'],
