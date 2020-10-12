@@ -50,7 +50,7 @@ function registration_field_page_html($html) {
     global $CONFIG;
     $superCage = Inspekt::makeSuperCage();
     if ($superCage->get->keyExists('user_id')) {
-        $user = mysql_fetch_assoc(cpg_db_query("SELECT user_active, user_info FROM {$CONFIG['TABLE_USERS']} WHERE user_id = ".$superCage->get->getInt('user_id')));
+        $user = cpg_db_fetch_assoc(cpg_db_query("SELECT user_active, user_info FROM {$CONFIG['TABLE_USERS']} WHERE user_id = ".$superCage->get->getInt('user_id')));
         if ($user['user_active'] == "NO" && $user['user_info']) {
             $row = <<<EOT
                 <tr>
@@ -68,4 +68,4 @@ EOT;
     return $html;
 }
 
-?>
+//EOF
