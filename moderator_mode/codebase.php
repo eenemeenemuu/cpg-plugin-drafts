@@ -18,9 +18,9 @@ function moderator_mode() {
     // Configuration here:
     $moderator_user_ids = array('3');
     $moderator_allowed_sites = array(
-        'displayimage.php', // needed for edit one pic (display button)
+        'displayimage.php', // needed for edit one pic (display buttons in intermediate-sized view)
         'edit_one_pic.php', // needed for edit one pic
-        'delete.php', // needed for edit one pic
+        'delete.php', // needed to delete one pic
         'index.php', // needed for edit several pics (display button in category/album view)
         'thumbnails.php', // needed for edit several pics (display button in thumbnail view)
         'editpics.php', // needed for edit several pics
